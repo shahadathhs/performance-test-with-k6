@@ -4,12 +4,20 @@ import { check } from 'k6';
 export default function () {
   const res = http.get('https://test.k6.io');
 
-  console.log(res.status);
-  check(true, {
-    'true is true': (value) => value === true
-  })
+  // const res = http.get('https://test.k6.io/contacts.php');
 
-  check(false, {
-    'false is true': (value) => value === true
-  })
+  // console.log(res.status);
+  // check(true, {
+  //   'true is true': (value) => value === true
+  // })
+
+  // check(false, {
+  //   'false is true': (value) => value === true
+  // })
+
+  // * Status checks
+  check(res, {
+    'status is 200': (r) => r.status === 200,
+    'page is startPage': (r) => r.body.includes('Collection of simple web-pages')
+  });
 }
